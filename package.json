@@ -1,0 +1,26 @@
+{
+  "name": "DakTestScripts",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "login-test.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "DakTech test scripts with GPT integration",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "openai": "^4.76.0",
+    "puppeteer": "^23.10.1",
+    "typescript": "^5.7.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.9"
+  },
+  "scripts": {
+    "start": "node login-test.js",
+    "gpt": "node utils/gpt.js"
+  },
+  "overrides": {
+    "whatwg-url": "^14.0.0"
+  }
+}
