@@ -1,0 +1,1012 @@
+<!DOCTYPE html><html style="height: auto;"><head>
+    <meta charset="utf-8">    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>
+        Incidents :: DDMS    </title>
+    <link href="/img/4biz/logo/logo.png" type="image/x-icon" rel="icon"><link href="/img/4biz/logo/logo.png" type="image/x-icon" rel="shortcut icon">        
+<meta http-equiv="Content-Security-Policy" content="
+default-src 'self' 'unsafe-inline' maps.googleapis.com cdn.jsdelivr.net cdnjs.cloudflare.com js.stripe.com portal.daktech.com.au www.google.com www.gstatic.com cdn.getpinch.com.au ssl.kaptcha.com api.getpinch.com.au; 
+style-src-elem 'self' 'unsafe-inline' maps.googleapis.com cdn.jsdelivr.net cdnjs.cloudflare.com js.stripe.com portal.daktech.com.au www.google.com www.gstatic.com cdn.getpinch.com.au ssl.kaptcha.com api.getpinch.com.au; 
+font-src 'self'; 
+img-src https://* 'self' data:; 
+child-src https://* ; 
+script-src 'self' 'unsafe-inline' 'unsafe-eval' maps.googleapis.com cdn.jsdelivr.net cdnjs.cloudflare.com js.stripe.com portal.daktech.com.au www.google.com www.gstatic.com cdn.getpinch.com.au ssl.kaptcha.com api.getpinch.com.au;
+">
+<link rel="stylesheet" href="/daktheme/plugins/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="/daktheme/plugins/datepicker/datepicker3.css"><link rel="stylesheet" href="/daktheme/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css"><link rel="stylesheet" href="/daktheme/plugins/fullcalendar/main.min.css?ver=1.0.0"><link rel="stylesheet" href="/daktheme/plugins/fullcalendar-daygrid/main.min.css"><link rel="stylesheet" href="/daktheme/plugins/fullcalendar-timegrid/main.min.css"><link rel="stylesheet" href="/daktheme/plugins/fullcalendar-bootstrap/main.min.css"><link rel="stylesheet" href="/daktheme/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css"><link rel="stylesheet" href="/daktheme/plugins/icheck-bootstrap/icheck-bootstrap.min.css"><link rel="stylesheet" href="/daktheme/plugins/summernote/summernote-bs4.min.css"><link rel="stylesheet" href="/daktheme/plugins/overlayScrollbars/css/OverlayScrollbars.min.css"><link rel="stylesheet" href="/daktheme/css/adminlte.min.css"><link rel="stylesheet" href="/libs/iCheck/skins/all.css"><link rel="stylesheet" href="/libs/datetimepicker/jquery.datetimepicker.css"><link rel="stylesheet" href="/libs/selectize/css/selectize.css"><link rel="stylesheet" href="/libs/selectize/css/selectize.bootstrap4.css"><link rel="stylesheet" href="/libs/select2/select2.min.css"><link rel="stylesheet" href="/libs/PasswordRulesHelper/css/passwordRulesHelper.css"><link rel="stylesheet" href="/css/responsive.css?v=1.1"><link rel="stylesheet" href="/css/custom.css?v=1.4"><link rel="stylesheet" href="/css/4biz.css"><script src="/daktheme/plugins/jquery/jquery.min.js"></script><link rel="stylesheet" href="/daktheme/plugins/jquery-ui/jquery-ui.min.css"><link rel="stylesheet" href="/daktheme/plugins/daterangepicker/daterangepicker.css">
+<!-- Application UI Scripts -->
+
+            <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">    <script src="//cdn.jsdelivr.net/npm/flatpickr"></script>
+
+        <link rel="stylesheet" href="/daktheme/css/print.css?v1.1" media="print">    <style>
+        #top-user-menu {
+            position: relative; /* Needed for z-index to work */
+            z-index: 1000; /* Any high value so it's above other elements */
+        }
+
+        #nav-left-menu {
+            /* overflow-y: hidden; */
+            /* overflow-x: auto; */
+            max-height: 100vh; /* Will not exceed the viewport height */
+        }
+        #nav-left-menu::-webkit-scrollbar {
+            height: 5px;
+        }
+
+        #nav-left-menu::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        #nav-left-menu::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+
+        #nav-left-menu::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        #nav-left-menu-dropdown{
+            display: none !important;
+        }
+        @media (max-width: 1300px) {
+            #nav-left-menu-list{
+                display: none !important;
+            }
+            #nav-left-menu-dropdown li, #nav-left-menu-dropdown div{
+                display: none !important;
+            }
+            #nav-left-menu-dropdown {
+                display: inline-block !important;
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+        }
+        .wrapper{
+            background : #f4f6f9;
+        }
+        .bg-settings {
+            background-color: #1f3b71 !important;
+            color: #fff !important;
+        }
+
+        .bg-settings h3, .main-sidebar .bg-settings i, .main-sidebar .bg-settings p, .main-sidebar .bg-settings li, .main-sidebar .bg-settings li.nav-header, .main-sidebar .bg-settings .title-settings{
+            color: #fff !important;
+        }
+</style>
+<style>.cke{visibility:hidden;}</style></head>
+
+
+
+
+<body class="sidebar-mini layout-fixed sidebar-closed sidebar-collapse" style="height: auto;">
+    <div class="wrapper">
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light main-header-fixed" style="margin-left: 0px !important; margin-bottom: 60px;">
+            <div class="sidebar-top-color border-right" style="width: 243px;">
+                <div class="d-flex justify-content-around align-items-center">
+                    <a href="#" id="sidemenu-button" class="nav-link text-dark" data-widget="pushmenu" role="button">
+                        <i class="fas fa-bars"></i>
+                    </a>
+                    <span class="text-bold text-dark text-lg text-truncate d-none d-md-block" id="client_name">DAKTECH</span>
+                    <a href="" class="d-flex justify-content-center align-items-center " style="max-height:45px;">
+                        <img src="/img/4biz/logo/logo.png" class="brand-image " style="opacity: 2; height: 20px; padding-right: 5px; padding-left: 5px" alt="Icon">                    </a>
+                </div>
+            </div>
+            <ul id="nav-left-menu" class="navbar-nav flex-fill">
+                <div id="nav-left-menu-list" class="d-flex" style="width: 100%">
+                    
+
+                </div> 
+                <div class="btn-group">
+                    <button id="nav-left-menu-dropdown" type="button" class="btn btn-light btn-sm dropdown-toggle text-dark" data-toggle="dropdown" aria-expanded="false">
+                            <span class="fa fa-ellipsis-h"></span>
+                    </button>
+                    <div class="dropdown-menu">
+                        
+
+                    </div>
+                </div>
+            </ul>
+            <ul id="top-user-menu" class="navbar-nav ml-auto align-items-center" style="color:darkslategrey !important;">
+                <div class="dropdown pt-1 text-secondary ml-3">
+    <div href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+        <span id="branch-drop-button-text">
+            Main        </span>
+        <span id="branch-drop-button-icon">
+            <span class="fa fa-building"></span>
+        </span>
+    </div>
+    <ul class="dropdown-menu scrollable-dropdown">
+        <span class="dropdown-header">Select your Branch</span>
+                <div class="dropdown-item list-group-item-dark">
+            <a href="/site/main/incidents/add?incident_template_id=1" class="btn">Main</a>        </div>
+                <div class="dropdown-item ">
+            <a href="/site/TSL/incidents/add?incident_template_id=1" class="btn">Townsville</a>        </div>
+                <div class="dropdown-item ">
+            <a href="/site/PTH/incidents/add?incident_template_id=1" class="btn">Perth</a>        </div>
+            </ul>
+</div>
+<style>
+    #branch-drop-button-icon{
+        display: none !important;
+    }
+    .scrollable-dropdown {
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    .fixed-header {
+      position: sticky;
+      top: 0;
+      background-color: #fff; /* Adjust background color as needed */
+      z-index: 1000;
+    }
+
+    @media (max-width: 960px) {
+        #branch-drop-button-text{
+            display: none !important;
+        }
+        #branch-drop-button-icon {
+            display: inline-block !important;
+        }
+    }
+</style>
+                <li class="nav-item">
+    <a href="/security-groups/open" title="User Permissions" class="btnPreview nav-link" style="padding-bottom: 10px;"><i class="fa fa-key"></i></a></li>
+                <li class="nav-item">
+        <a href="/help?c=Incidents" title="Documentation" class="btnPreview nav-link" style="padding-bottom: 10px;"><i class="fa fa-question-circle"></i></a></li>
+                <style>
+  .truncate-parent-message{
+    overflow:hidden;
+    font-size: 0px;
+    letter-spacing: 0px;
+    word-spacing: 0px;
+  }
+  .truncate-child{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: calc(100%);
+    display: inline-block;
+  }
+  hr {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+</style>
+
+<li class="nav-item dropdown" data-toggle="tooltip" data-placement="bottom">
+    <a href="#" class="nav-link" data-toggle="dropdown">
+        <i class="far fa-comments"></i>
+        <span class="badge badge-info navbar-badge text-bold">
+            1</span>
+            </a>
+    <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg">
+        <span class="dropdown-header">Notice Board</span>
+        <hr>
+                                                        <a href="/messages/view/2" class="dropdown-item" title="Alert for everyone!">
+                    <div class="media">
+                        <img src="/img/profile.jpg" class="img-size-50 mr-3 img-circle">
+                        <div class="media-body truncate-parent-message">
+                            <span class="text-sm text-bold truncate-child">Alert for everyone!</span>
+                            <p class="text-xs text-muted"><i class="far fa-clock mr-1"></i>on 5/11/24
+                        </p></div>
+                    </div>
+                </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="/messages/add" class="btn btn-default btn-sm childlink btn-block" title="Add"><i class="fa fa-plus" aria-hidden="true"></i></a>    </div>
+</li>                 <li class="nav-item dropdown" data-toggle="tooltip" data-placement="bottom">
+    <a href="#" class="nav-link" data-toggle="dropdown">
+        <i class="far fa-bell"></i>
+            </a>
+    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
+        <span class="dropdown-header">You have no new notifications</span>
+        <!-- inner menu: contains the actual data -->
+                <div class="dropdown-divider"></div>
+        <a href="/alerts" class="dropdown-item dropdown-footer">See all notifications</a>    </div>
+</li>                <!-- Top Nav bar Profile Menu icon-->
+<li class="nav-item" data-toggle="tooltip" data-placement="bottom">
+    <a href="#" class="nav-link masterlink" data-widget="control-sidebar" data-slide="true" role="button">
+        <i class="fas fa-user"></i>
+    </a>
+</li>            </ul>
+        </nav>
+        <div class="bg-default">
+            <aside id="aside" class="main-sidebar elevation-0 bg-settings noprint" style="top: 57px;">
+    <!-- Sidebar -->
+    <div class="sidebar sidebar-scrollbar">
+    
+<nav class="mt-2 mb-5">
+    <ul class="nav nav-pills nav-sidebar flex-column nav-compact nav-side-menu" data-widget="treeview" role="menu" data-accordion="false">
+        <li class="nav-item">
+            <div class="form-inline">
+            <form method="get" accept-charset="utf-8" role="form" action="/incidents">                <div class="input-group" data-widget="sidebar-search">
+                    <input type="search" name="qsearch" class="form-control form-control-sidebar" autocomplete="off" placeholder="Search" id="sidebar-search" aria-label="Search">                    <div class="input-group-append">
+                        <button class="btn btn-sidebar btn-secondary" type="submit"><i class="fas fa-search fa-fw"></i></button>                    </div>
+                </div>
+                </form>            </div>
+            <ul id="search-results"></ul>
+        </li>
+        <li class="nav-item"><a href="#" class="text-white nav-link side nav-filter-select" data-target="nav-crm"><i class="nav-icon fa fa-people-arrows">&nbsp;</i><p>CRM</p></a></li>                
+                                    <li class="nav-item nav-filter nav-crm" style="display: none;">
+                                                <a href="/cards" title="List of all cards" class="text-white nav-link side  "><i class="nav-icon fa fa fa-people-arrows"></i><p>Cards</p></a>                                        </li>
+                                        
+                                    <li class="nav-item nav-filter nav-crm" style="display: none;">
+                        <div class="d-flex justify-content-between align-items-center">                        <a href="/card-templates" title="List tempaltes" class="text-white nav-link side flex-grow-1 nav-left-btn "><i class="nav-icon fa fa fa-list"></i><p>Templates</p></a>                                                <a href="/CardTemplates/add" title="Add New" class="text-white nav-link side nav-right-btn"><i class="nav-icon fa fa fa-plus "></i></a>                        </div>
+                                        </li>
+                                        
+                <li class="nav-item"><a href="#" class="text-white nav-link side nav-filter-select" data-target="nav-operations"><i class="nav-icon fa fa-cogs">&nbsp;</i><p>Operations</p></a></li>                
+                                    <li class="nav-item nav-filter nav-operations" style="display: none;">
+                                                <a href="/Dashboards/view" title="View dashboard" class="text-white nav-link side  "><i class="nav-icon fa fas fa-tachometer-alt"></i><p>Dashboard</p></a>                                        </li>
+                                                            <li class="nav-header  nav-filter nav-operations" style="display: none;">
+                    Asset Management</li>
+                                
+                                    <li class="nav-item nav-filter nav-operations" style="display: none;">
+                        <div class="d-flex justify-content-between align-items-center">                        <a href="/Equipment/index" title="List of all equipment" class="text-white nav-link side flex-grow-1 nav-left-btn "><i class="nav-icon fa fa fa-fighter-jet"></i><p>Equipment</p></a>                                                <a href="/Equipment/add" title="Add Equipment" class="text-white nav-link side nav-right-btn"><i class="nav-icon fa fa fa-plus "></i></a>                        </div>
+                                        </li>
+                                        
+                                
+                                    <li class="nav-item nav-filter nav-operations" style="display: none;">
+                                                <a href="/equipment-usage-templates/index" title="Manage equipment usage templates" class="text-white nav-link side  "><i class="nav-icon fa fa fa-wrench"></i><p>Usage Templates</p></a>                                        </li>
+                                        
+                                    <li class="nav-item nav-filter nav-operations" style="display: none;">
+                                                <a href="/EquipmentDefects/index" title="View all equipment defects" class="text-white nav-link side  "><i class="nav-icon fa fa fa-exclamation-triangle"></i><p>Defects</p></a>                                        </li>
+                                        
+                                    <li class="nav-item nav-filter nav-operations" style="display: none;">
+                                                <a href="/EquipmentLogs/index" title="View all equipment records" class="text-white nav-link side  "><i class="nav-icon fa fa fa-cogs"></i><p>Equipment Records</p></a>                                        </li>
+                                        
+                                    <li class="nav-item nav-filter nav-operations" style="display: none;">
+                        <div class="d-flex justify-content-between align-items-center">                        <a href="/EquipmentTypes/index" title="View all equipment types" class="text-white nav-link side flex-grow-1 nav-left-btn "><i class="nav-icon fa fa fa-cogs"></i><p>Equipment Types</p></a>                                                <a href="/EquipmentTypes/add" title="Add Type" class="text-white nav-link side nav-right-btn"><i class="nav-icon fa fa fa-plus "></i></a>                        </div>
+                                        </li>
+                                        
+                                                    <li class="nav-header  nav-filter nav-operations" style="display: none;">
+                    Scheduling</li>
+                                
+                                    <li class="nav-item nav-filter nav-operations" style="display: none;">
+                        <div class="d-flex justify-content-between align-items-center">                        <a href="/Meetings/index" title="List Meetings" class="text-white nav-link side flex-grow-1 nav-left-btn "><i class="nav-icon fa fa fa-handshake"></i><p>Meetings</p></a>                                                <a href="/Meetings/add" title="Add New" class="text-white nav-link side nav-right-btn"><i class="nav-icon fa fa fa-plus "></i></a>                        </div>
+                                        </li>
+                                        
+                                
+                                    <li class="nav-item nav-filter nav-operations" style="display: none;">
+                        <div class="d-flex justify-content-between align-items-center">                        <a href="/MeetingTemplates/index" title="List Meetings Templates" class="text-white nav-link side flex-grow-1 nav-left-btn "><i class="nav-icon fa fa fa-calendar-alt"></i><p>Meetings Templates</p></a>                                                <a href="/Meetings/add" title="Add New" class="text-white nav-link side nav-right-btn"><i class="nav-icon fa fa fa-plus "></i></a>                        </div>
+                                        </li>
+                                        
+                                
+                                    <li class="nav-item nav-filter nav-operations" style="display: none;">
+                                                <a href="/MeetingTypes/index" title="List Meetings Types" class="text-white nav-link side  "><i class="nav-icon fa fa fa-adjust"></i><p>Meetings Types</p></a>                                        </li>
+                                        
+                                    <li class="nav-item nav-filter nav-operations" style="display: none;">
+                                                <a href="/Messages/index" title="Manage notice board messages and notifications" class="text-white nav-link side  "><i class="nav-icon fa fa fa-comment"></i><p>Messages</p></a>                                        </li>
+                                        
+                                    <li class="nav-item nav-filter nav-operations" style="display: none;">
+                                                <a href="/Alerts/index" title="View all alerts" class="text-white nav-link side  "><i class="nav-icon fa fa fa-bell"></i><p>Alerts</p></a>                                        </li>
+                                        
+                                    <li class="nav-item nav-filter nav-operations" style="display: none;">
+                                                <a href="/MyTasks/index" title="View My Tasks" class="text-white nav-link side  "><i class="nav-icon fa fa fa-mug-hot"></i><p>My Tasks</p></a>                                        </li>
+                                                            <li class="nav-header  nav-filter nav-operations" style="display: none;">
+                    Resources</li>
+                                
+                                    <li class="nav-item nav-filter nav-operations" style="display: none;">
+                                                <a href="/Resources/index" title="List resources" class="text-white nav-link side  "><i class="nav-icon fa fa fa-book"></i><p>Resources</p></a>                                        </li>
+                                        
+                <li class="nav-item"><a href="#" class="text-white nav-link side nav-filter-select" data-target="nav-safety"><i class="nav-icon fa fa-shield-alt">&nbsp;</i><p>Safety</p></a></li>                
+                                    <li class="nav-item nav-filter nav-safety" style="display: block;">
+                                                <a href="/Incidents/index" title="List incidents" class="text-white nav-link side  "><i class="nav-icon fa fa fa-exclamation-triangle"></i><p>Incidents</p></a>                                        </li>
+                                        
+                                    <li class="nav-item nav-filter nav-safety" style="display: block;">
+                                                <a href="/IncidentTemplates/index" title="Incident Templates" class="text-white nav-link side  "><i class="nav-icon fa fa fa-edit"></i><p>Incident Templates</p></a>                                        </li>
+                                        
+                                    <li class="nav-item nav-filter nav-safety" style="display: block;">
+                                                <a href="/IncidentsReports/index" title="Incident Reports" class="text-white nav-link side  "><i class="nav-icon fa fa fa-file-invoice"></i><p>Incident Reports</p></a>                                        </li>
+                                        
+                                    <li class="nav-item nav-filter nav-safety" style="display: block;">
+                        <div class="d-flex justify-content-between align-items-center">                        <a href="/Tasks/index" title="List risk assessments" class="text-white nav-link side flex-grow-1 nav-left-btn "><i class="nav-icon fa fa fa-briefcase-medical"></i><p>Risk Assessments</p></a>                                                <a href="/Tasks/add" title="Add New" class="text-white nav-link side nav-right-btn"><i class="nav-icon fa fa fa-plus "></i></a>                        </div>
+                                        </li>
+                                        
+                                
+                                    <li class="nav-item nav-filter nav-safety" style="display: block;">
+                                                <a href="/RiskMatrices/index" title="Risk Matrix" class="text-white nav-link side  "><i class="nav-icon fa fa fa-table"></i><p>Risk Matrix</p></a>                                        </li>
+                                        
+                                    <li class="nav-item nav-filter nav-safety" style="display: block;">
+                                                <a href="/RiskAssessmentMasters/index" title="Risk Assessment Master List" class="text-white nav-link side  "><i class="nav-icon fa fa fa-list"></i><p>Master List</p></a>                                        </li>
+                                        
+                                    <li class="nav-item nav-filter nav-safety" style="display: block;">
+                                                <a href="/RiskClasses/index" title="Risk Classes" class="text-white nav-link side  "><i class="nav-icon fa fa fa-file-medical"></i><p>Risk Classes</p></a>                                        </li>
+                                        
+                                    <li class="nav-item nav-filter nav-safety" style="display: block;">
+                                                <a href="/RiskProbabilities/index" title="Risk Probabilities" class="text-white nav-link side  "><i class="nav-icon fa fa fa-balance-scale"></i><p>Risk Probabilities</p></a>                                        </li>
+                                        
+                                    <li class="nav-item nav-filter nav-safety" style="display: block;">
+                                                <a href="/RiskSeverities/index" title="Risk Consequences" class="text-white nav-link side  "><i class="nav-icon fa fa fa-ambulance"></i><p>Risk Consequences</p></a>                                        </li>
+                        <li class="nav-item"><a href="#" class="text-white nav-link side nav-filter-select" data-target="nav-training"><i class="nav-icon fa fa-chalkboard-teacher">&nbsp;</i><p>Training</p></a></li>                
+                                    <li class="nav-item nav-filter nav-training" style="display: none;">
+                        <div class="d-flex justify-content-between align-items-center">                        <a href="/Certifications/index" title="List Certifications" class="text-white nav-link side flex-grow-1 nav-left-btn "><i class="nav-icon fa fa fa-certificate"></i><p>Certifications</p></a>                                                <a href="/Certifications/add" title="Add New" class="text-white nav-link side nav-right-btn"><i class="nav-icon fa fa fa-plus "></i></a>                        </div>
+                                        </li>
+                                        
+                                
+                                    <li class="nav-item nav-filter nav-training" style="display: none;">
+                        <div class="d-flex justify-content-between align-items-center">                        <a href="/CertificationTypes/index" title="List Certifications Types" class="text-white nav-link side flex-grow-1 nav-left-btn "><i class="nav-icon fa fa fa-dice-d6"></i><p>Certification Types</p></a>                                                <a href="/CertificationTypes/add" title="Add New" class="text-white nav-link side nav-right-btn"><i class="nav-icon fa fa fa-plus "></i></a>                        </div>
+                                        </li>
+                                        
+                                
+                                    <li class="nav-item nav-filter nav-training" style="display: none;">
+                                                <a href="/People/index" title="View training matrix" class="text-white nav-link side  "><i class="nav-icon fa fa fa-search"></i><p>People Lookup</p></a>                                        </li>
+                                        
+                                    <li class="nav-item nav-filter nav-training" style="display: none;">
+                        <div class="d-flex justify-content-between align-items-center">                        <a href="/registers/index" title="Manage inductions and associated data" class="text-white nav-link side flex-grow-1 nav-left-btn "><i class="nav-icon fa fa fa-graduation-cap"></i><p>Training</p></a>                                                <a href="/registers/add" title="Add Register" class="text-white nav-link side nav-right-btn"><i class="nav-icon fa fa fa-plus "></i></a>                        </div>
+                                        </li>
+                                        
+                                
+                                    <li class="nav-item nav-filter nav-training" style="display: none;">
+                                                <a href="/registers/invite" title="Invite a user to complete an induction" class="text-white nav-link side  "><i class="nav-icon fa fa fa-envelope"></i><p>Invite User</p></a>                                        </li>
+                                        
+                                    <li class="nav-item nav-filter nav-training" style="display: none;">
+                                                <a href="/register-templates/index" title="Manage register templates" class="text-white nav-link side  "><i class="nav-icon fa fa fa-list"></i><p>Register Templates</p></a>                                        </li>
+                                        
+                                    <li class="nav-item nav-filter nav-training" style="display: none;">
+                                                <a href="/form-templates/index" title="Manage Form templates" class="text-white nav-link side  "><i class="nav-icon fa fa fa-passport"></i><p>Form Templates</p></a>                                        </li>
+                        <li class="nav-item"><a href="#" class="text-white nav-link side nav-filter-select" data-target="nav-admin"><i class="nav-icon fa fa-user-shield">&nbsp;</i><p>Admin</p></a></li>                
+                                    <li class="nav-item nav-filter nav-admin" style="display: none;">
+                                                <a href="/Backups/index" title="Backup and restore the system" class="text-white nav-link side  "><i class="nav-icon fa fa fa-database"></i><p>Backups</p></a>                                        </li>
+                                        
+                                    <li class="nav-item nav-filter nav-admin" style="display: none;">
+                        <div class="d-flex justify-content-between align-items-center">                        <a href="/Branches/index" title="View all branches" class="text-white nav-link side flex-grow-1 nav-left-btn "><i class="nav-icon fa fa fa-building"></i><p>Branches</p></a>                                                <a href="/Branches/add" title="Add Branch" class="text-white nav-link side nav-right-btn"><i class="nav-icon fa fa fa-plus "></i></a>                        </div>
+                                        </li>
+                                        
+                                
+                                    <li class="nav-item nav-filter nav-admin" style="display: none;">
+                        <div class="d-flex justify-content-between align-items-center">                        <a href="/BranchLocations/index" title="View all branch locations" class="text-white nav-link side flex-grow-1 nav-left-btn "><i class="nav-icon fa fa fa-building"></i><p>Locations</p></a>                                                <a href="/BranchLocations/add" title="Add Location" class="text-white nav-link side nav-right-btn"><i class="nav-icon fa fa fa-plus "></i></a>                        </div>
+                                        </li>
+                                        
+                                
+                                    <li class="nav-item nav-filter nav-admin" style="display: none;">
+                                                <a href="/Cronjobs/index" title="Scheduled Tasks" class="text-white nav-link side  "><i class="nav-icon fa fas fa-clock"></i><p>Cron Jobs</p></a>                                        </li>
+                                        
+                                    <li class="nav-item nav-filter nav-admin" style="display: none;">
+                        <div class="d-flex justify-content-between align-items-center">                        <a href="/Departments/index" title="View all departments" class="text-white nav-link side flex-grow-1 nav-left-btn "><i class="nav-icon fa fa fa-id-card"></i><p>Departments</p></a>                                                <a href="/Departments/add" title="Add Departments" class="text-white nav-link side nav-right-btn"><i class="nav-icon fa fa fa-plus "></i></a>                        </div>
+                                        </li>
+                                        
+                                
+                                    <li class="nav-item nav-filter nav-admin" style="display: none;">
+                                                <a href="/Menus/index" title="Manage menus" class="text-white nav-link side  "><i class="nav-icon fa fa fa-bars"></i><p>Menus</p></a>                                        </li>
+                                        
+                                    <li class="nav-item nav-filter nav-admin" style="display: none;">
+                        <div class="d-flex justify-content-between align-items-center">                        <a href="/Users/index" title="List Users" class="text-white nav-link side flex-grow-1 nav-left-btn "><i class="nav-icon fa fa fa-users"></i><p>Users</p></a>                                                <a href="/Users/add" title="Add New" class="text-white nav-link side nav-right-btn"><i class="nav-icon fa fa fa-plus "></i></a>                        </div>
+                                        </li>
+                                        
+                                
+                                    <li class="nav-item nav-filter nav-admin" style="display: none;">
+                        <div class="d-flex justify-content-between align-items-center">                        <a href="/UserTypes/index" title="List Users Types" class="text-white nav-link side flex-grow-1 nav-left-btn "><i class="nav-icon fa fa fa-dice-d6"></i><p>Users Types</p></a>                                                <a href="/UserTypes/add" title="Add New" class="text-white nav-link side nav-right-btn"><i class="nav-icon fa fa fa-plus "></i></a>                        </div>
+                                        </li>
+                                        
+                    </ul>
+</nav>
+
+    </div>  
+    <!-- /.sidebar -->
+</aside>
+
+<script type="text/javascript">
+    function selectMenu(menu) {
+        console.log(menu);
+        document.querySelectorAll('.nav-filter').forEach(function(element) {
+            element.style.display = 'none';
+        });
+        document.querySelectorAll('.nav-filter.' + menu).forEach(function(element) {
+            element.style.display = 'block';
+        });
+    }
+
+    document.querySelectorAll('.nav-filter-select').forEach(function(element) {
+        element.addEventListener('click', function() {
+            //check if it has selected class
+            if (this.classList.contains('selected')) {
+                //remove selected class
+                this.classList.remove('selected');
+                selectMenu('none');
+                return;
+            }
+
+            var menu = this.getAttribute('data-target');
+            selectMenu(menu);
+
+            // Toggle 'selected' class
+            document.querySelectorAll('.nav-filter-select').forEach(function(el) {
+                el.classList.remove('selected');
+            });
+            this.classList.add('selected');
+
+        });
+    });
+
+    selectMenu('nav-safety');
+
+</script>
+
+<style>
+
+        @media (min-width: 992px) {
+            .sidebar-mini.sidebar-collapse .nav-sidebar .nav-link p {
+                width: auto;
+            }
+        }
+     .nav-filter-select {
+        background-color: #f39c12; /* Distinct background color */
+        border: 2px solid #e67e22; /* Border */
+
+        background-color: #7aaddb;
+        border: 2px solid #6b9ac3;
+
+        color: #fff; /* Text color */
+        font-size: 1.2em; /* Increase font size */
+        padding: 10px; /* Add padding */
+        margin: 5px 0; /* Add margin */
+        border-radius: 5px; /* Rounded corners */
+        display: flex;
+        align-items: center;
+    }
+
+    .nav-right-btn{
+        flex: 0 0 auto; 
+        width: 50px; 
+        text-align: center;
+        margin-left: 5px;
+        padding-left: 10px;
+        border: 1px solid #e67e22;
+    }
+
+    .nav-left-btn{
+        overflow: hidden; 
+        white-space: nowrap;
+        max-width: 178px
+    }
+
+    .nav-filter-select.selected {
+        background-color: #e67e22;
+        background-color: #6088ad;
+        border: none;
+    }
+
+
+    .side-menu-background {
+        background-color: #1f3b71 !important;
+        color: white !important;
+    }
+
+    .active-item {
+        background-color: steelblue !important;
+    }
+
+    .nav-header {
+        padding-left: 5px !important;
+    }
+
+    .search-result-button {
+        display: block;
+        width: 100%;
+        margin-bottom: 5px;
+        text-align: left;
+    }
+
+    .search-result-button.selected {
+        background-color: #007bff;
+        color: white;
+    }
+</style>
+
+            <div id="tab-content-wrapper">
+    <div class="content-wrapper" style="min-height: 470.4px;">
+        <section class="content print-padding pt-1">
+            <div id="page-content">
+                        
+<div class="card">
+    <div class="card-header bg-settings"><h3 class="card-title title-settings">New Incident Report</h3>
+        <div class="btn-group float-right">
+            <a href="/incidents" class="btn btn-default" title="List"><span class="fa fa-list"></span><span class="sr-only">List</span></a>        </div>
+    </div>
+    <form method="post" accept-charset="utf-8" role="form" action="/incidents/add?incident_template_id=1"><div style="display:none;"><input type="hidden" name="_csrfToken" autocomplete="off" value="pMOi+jYrbu/NwOWQiQPY+P45PnGPwAbDJAL27a8Cm+iNthdNzgm6q7ekNf9wrWJ+ebnU49yFGNfE/qmbuOdLKJplDjwcXvwVnA5fELf3ZPJCO5WJzjD+3O/SdSj+PI2ag5YGyBHIWkpBj7DR5eB7tA=="></div>    <div class="card-body">
+                    <h1>Incident Report</h1>
+            <h3>Class 3</h3>
+            
+        <table>
+                                    
+
+        </table>
+            
+            <table class="table"><tbody><tr><th class="col-xs-4 col-md-2">Full Name</th><td class="col-xs-6 col-md-8 text-left">John Doe</td></tr><tr><th class="col-xs-4 col-md-2">Contact Number</th><td class="col-xs-6 col-md-8 text-left">0400123456</td></tr><tr><th class="col-xs-4 col-md-2">Date of Incident</th><td class="col-xs-6 col-md-8 text-left">2023-12-12</td></tr><tr><th class="col-xs-4 col-md-2">Time of Incident</th><td class="col-xs-6 col-md-8 text-left">14:30</td></tr><tr><th colspan="2">What Happened</th></tr><tr><td colspan="2"><p>An example incident report.</p></td></tr></tbody></table>            <input type="hidden" name="department_id" value=""><input type="hidden" name="incident_class_id" value="3"><input type="hidden" name="reportdata[field_3]" value="John Doe"><input type="hidden" name="reportdata[field_4]" value="0400123456"><input type="hidden" name="reportdata[field_5]" value="2023-12-12"><input type="hidden" name="reportdata[field_6]" value="14:30"><input type="hidden" name="reportdata[field_7]" value="An example incident report."><input type="hidden" name="reporttype[field_3]" value="text"><input type="hidden" name="reporttype[field_4]" value="text"><input type="hidden" name="reporttype[field_5]" value="date"><input type="hidden" name="reporttype[field_6]" value="time"><input type="hidden" name="reporttype[field_7]" value="textarea">            <div class="submit"><input type="submit" name="confirm" bootstrap-type="success" class="btn-success btn" value="To the best of my knowledge these details are correct and true"></div>            <br>
+            <div class="submit"><input type="submit" name="oops" class="btn-warning btn" value="Go back and adjust"></div>            </div>
+    <div style="display:none;"><input type="hidden" name="_Token[fields]" autocomplete="off" value="f64b50fc15b62627f4cea44b51c93ea835fca013%3Adepartment_id%7Cincident_class_id%7Creportdata.field_3%7Creportdata.field_4%7Creportdata.field_5%7Creportdata.field_6%7Creportdata.field_7%7Creporttype.field_3%7Creporttype.field_4%7Creporttype.field_5%7Creporttype.field_6%7Creporttype.field_7"><input type="hidden" name="_Token[unlocked]" autocomplete="off" value="confirm%7Coops"></div></form> 
+</div>
+            </div>
+        </section>
+    </div>
+</div>
+<style>
+    .content-wrapper{
+        background: #f4f6f9;
+    }
+</style>            <footer class="main-footer footer-padding-0-5-em" style="margin-top: 100px; border-top: 1px solid #dee2e6">
+    <div class="d-flex justify-content-between align-items-end flex-wrap footer-padding-text footer-mobile-center">
+        <div class="d-flex flex-fill justify-content-between flex-wrap footer-mobile-center footer-mobile-spacing">
+            <img src="/img/4biz/text/logo-menu.png" class="img-responsive" alt="Logo" style="height: 1.5em">        </div>
+        <div class="text-sm footer-mobile-center footer-mobile-spacing" style="text-align:center;">Copyright © 2024 
+            <a href="https://daktech.dev/">DakTech Pty Ltd</a>.
+            All rights reserved. 
+        </div>
+        <div class="flex-fill d-flex justify-content-end text-sm footer-mobile-center">
+            <a href="/pages/terms" target="_blank" class="text-muted">Terms</a>&nbsp;
+            <a href="/pages/credits" target="_blank" class="text-muted">| Credits</a>&nbsp;
+            <a href="/pages/privacy" target="_blank" class="text-muted">| Privacy</a>        </div>
+    </div>
+</footer>
+
+<style>
+    .footer-padding-0-5-em{
+        padding : 0.5em !important;
+    }
+    .footer-padding-text{
+        padding: 1rem;
+    }
+
+    @media (max-width: 576px){
+    .footer-mobile-spacing{
+        padding-bottom:10px;
+    }
+}
+</style>                        
+<!-- Html code for Top Nav bar icon is in user-top-menu.ctp -->
+
+
+    <!-- AdminLTE3 Profile menu design -->
+    <aside class="control-sidebar control-sidebar bg-settings" style="height: 375px; border-radius: 0px 0px 0px 10px; border-left: 2px solid red;">
+        <div class="p-3 text-center">
+
+        <!-- User image and username -->
+        <img src="/img/profile.jpg" class="img-circle profile-user-img img-fluid mt-5" alt="User Image" id="profile-userimage">        <h3 class="profile-username text-white text-center" style="margin-bottom: 3px;"> DakTesting </h3>
+
+                    <h3 class="mb-2 mt-1" style="text-align:center;">
+                <span class="badge bg-gradient-warning"><span class="fa fa-key"></span> Super Admin                </span>
+            </h3>
+        
+        <!-- Account age -->
+        <p class="text-muted text-white text-center" style="margin-bottom: 0px; font-style:italic;">Member since 25/11/24, 2:23 pm</p>
+
+        <!-- Session expiry -->
+                <p class="text-center text-white" style="margin-bottom: 0px;">Session Expires: <span id="sessionTimer"></span></p>
+
+                    
+        <!-- Remember me button -->
+        <div class="pull-left"><form method="post" accept-charset="utf-8" role="form" action="/users/cookie"><div style="display:none;"><input type="hidden" name="_csrfToken" autocomplete="off" value="pMOi+jYrbu/NwOWQiQPY+P45PnGPwAbDJAL27a8Cm+iNthdNzgm6q7ekNf9wrWJ+ebnU49yFGNfE/qmbuOdLKJplDjwcXvwVnA5fELf3ZPJCO5WJzjD+3O/SdSj+PI2ag5YGyBHIWkpBj7DR5eB7tA=="></div><button title="Save session cookie for 30 days" class="btn btn-info btn-block text-white" style="margin-top: 8px;" type="submit">Remember Me</button><div style="display:none;"><input type="hidden" name="_Token[fields]" autocomplete="off" value="7a27cc7efad7b1016b11a36d1c0d62c4b59630aa%3A"><input type="hidden" name="_Token[unlocked]" autocomplete="off" value=""></div></form></div>        <!-- <a href="/menus/rebuild" class="btn bg-teal btn-block text-white notip mt-1">Rebuild Menu</a> -->
+        <!-- Profile view button -->
+        <a href="/users/view/232" class="btn btn-primary btn-block text-white notip" style="margin-top: 8px;">Profile</a>        
+        <!-- Sign out button -->
+        <a href="/users/logout" class="btn btn-danger btn-block text-white notip">Sign out</a>        </div>
+    
+<!-- If not authenticated -->
+</aside>        </div>
+    <div id="sidebar-overlay"></div></div>
+        <div class="modal fade" id="previewModel" tabindex="-1" role="dialog" aria-labelledby="previewModelLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="previewModelLabel"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                <span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body" id="previewModel-body" style="max-height: 450px;">
+            </div>
+            <div class="modal-footer" id="previewModel-footer">
+                <button type="button" class="btn btn-primary form-button" id="bottom-submit">Submit</button>
+                <button type="button" style="position: absolute; bottom: 65px; right: 0px;" class="btn btn-text btn-xs rounded-circle  form-button float-right hidden" id="bottom-scrolltotop"><i class="fa fa-arrow-up"></i></button>
+                <button type="button" class="btn btn-dark form-button float-left" data-dismiss="modal" id="bottom-close-button">Close</button>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+    
+        <script type="text/javascript"> 
+    //<![CDTA[
+        $(document).ready(function(){
+            $('.user_select2').selectize();
+
+        });
+    //]]>
+</script><script src="/daktheme/plugins/jquery-ui/jquery-ui.min.js"></script><script src="/daktheme/js/adminlte.min.js"></script><script src="/daktheme/plugins/bootstrap/js/bootstrap.bundle.min.js"></script><script src="/daktheme/plugins/jquery-progressbar/jquery.progressbar.min.js"></script><script src="/libs/datetimepicker/jquery.datetimepicker.full.js"></script><script src="/libs/jSignature/jSignature.min.js"></script><script src="/libs/selectize/js/standalone/selectize.js"></script><script src="/libs/select2/select2.full.min.js"></script><script src="/libs/PasswordRulesHelper/js/passwordRulesHelper.js"></script><script src="/libs/Inputmask/jquery.inputmask.min.js"></script><script src="/daktheme/plugins/fastclick/fastclick.js"></script><script src="/daktheme/plugins/datepicker/bootstrap-datepicker.js"></script><script src="/daktheme/plugins/datatables/jquery.dataTables.min.js"></script><script src="/daktheme/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script><script src="/daktheme/plugins/jquery-knob/jquery.knob.min.js"></script><script src="/daktheme/plugins/moment/moment.min.js"></script><script src="/daktheme/plugins/daterangepicker/daterangepicker.js"></script><script src="/daktheme/plugins/fullcalendar/main.min.js"></script><script src="/daktheme/plugins/fullcalendar-daygrid/main.min.js"></script><script src="/daktheme/plugins/fullcalendar-timegrid/main.min.js"></script><script src="/daktheme/plugins/fullcalendar-interaction/main.min.js"></script><script src="/daktheme/plugins/fullcalendar-bootstrap/main.min.js"></script><script src="/daktheme/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script><script src="/daktheme/plugins/summernote/summernote-bs4.min.js"></script><script src="/daktheme/plugins/ckeditor/ckeditor.js"></script><script src="/daktheme/plugins/masonry-docs/masonry.pkgd.min.js"></script><script src="/js/responsive.js?v=1.0"></script><script>
+function googleMapLoaded(){
+    var event = new CustomEvent('googleMapsLoaded');
+    window.dispatchEvent(event);
+    }
+</script><script src="https://maps.googleapis.com/maps/api/js?key=enter-google-api-key-here&amp;libraries=places&amp;callback=googleMapLoaded"></script><script>
+
+  $(document).ready(function(){
+
+    //Enable colour picker
+    $('.color-picker').colorpicker();
+    
+    $("[data-card-widget='collapse'], .cookies-button" ).on('click',
+        function(){
+            $card = $(this).data('cardid');
+            //if empty use the id
+            if(!$card){
+                $card = $(this).closest('.card').attr('id');
+            }
+
+            if($(this).children().first().hasClass('fa-chevron-down')){
+                $collapsed = 0;
+            }else{
+                $collapsed = 1;
+            }
+            
+            $data = {
+                type: "box-state", 
+                hi: 'bob',
+                card: $card, 
+                state: $collapsed,
+                _csrfToken: 'pMOi+jYrbu/NwOWQiQPY+P45PnGPwAbDJAL27a8Cm+iNthdNzgm6q7ekNf9wrWJ+ebnU49yFGNfE/qmbuOdLKJplDjwcXvwVnA5fELf3ZPJCO5WJzjD+3O/SdSj+PI2ag5YGyBHIWkpBj7DR5eB7tA=='
+            };
+            $.post( "/users/settings", $data);
+          
+    });
+
+    $('.title-collapse').click(function(){
+        $(this).closest('.card-header').find("[data-card-widget='collapse']").click();
+    });
+
+    $("[data-widget='pushmenu']").on('click', function() {
+        if($('body').hasClass('sidebar-collapse')){
+            $collapsed = 0;
+        }else{
+            $collapsed = 1;
+        }
+
+        $data = {
+            type: "box-state", 
+            card: 'SideBar',
+            state: $collapsed,
+            _csrfToken: 'pMOi+jYrbu/NwOWQiQPY+P45PnGPwAbDJAL27a8Cm+iNthdNzgm6q7ekNf9wrWJ+ebnU49yFGNfE/qmbuOdLKJplDjwcXvwVnA5fELf3ZPJCO5WJzjD+3O/SdSj+PI2ag5YGyBHIWkpBj7DR5eB7tA=='
+        };
+        $.post( "/users/settings", $data);
+    });
+  });
+</script><script>
+
+function toggleDropdown (e) {
+    const _d = $(e.target).closest('.dropdown'),
+        _m = $('.dropdown-menu', _d);
+    setTimeout(function(){
+        const shouldOpen = e.type !== 'click' && _d.is(':hover');
+        _m.toggleClass('show', shouldOpen);
+        _d.toggleClass('show', shouldOpen);
+        $('[data-toggle="dropdown"]', _d).attr('aria-expanded', shouldOpen);
+    }, e.type === 'mouseleave' ? 300 : 0);
+}
+
+$('body')
+    .on('mouseenter mouseleave','.dropdown',toggleDropdown)
+    .on('click', '.dropdown-menu a', toggleDropdown);
+
+</script><script>
+
+function toggleDropdown (e) {
+    const _d = $(e.target).closest('.dropdown'),
+        _m = $('.dropdown-menu', _d);
+    setTimeout(function(){
+        const shouldOpen = e.type !== 'click' && _d.is(':hover');
+        _m.toggleClass('show', shouldOpen);
+        _d.toggleClass('show', shouldOpen);
+        $('[data-toggle="dropdown"]', _d).attr('aria-expanded', shouldOpen);
+    }, e.type === 'mouseleave' ? 300 : 0);
+}
+
+$('body')
+    .on('mouseenter mouseleave','.dropdown',toggleDropdown)
+    .on('click', '.dropdown-menu a', toggleDropdown);
+
+</script><script type="text/javascript"> 
+//<![CDTA[
+    var menuItems = [{"title":"Cards","description":"List of all cards","link":"\/cards"},{"title":"Templates","description":"List tempaltes","link":"\/card-templates"},{"title":"Add Card Template","description":"Add new card template","link":"\/card-templates\/add"},{"title":"Dashboard","description":"View dashboard","link":"\/Dashboards\/view"},{"title":"Equipment","description":"List of all equipment","link":"\/Equipment\/index"},{"title":"Add Equipment","description":"Add new equipment","link":"\/Equipment\/add"},{"title":"Usage Templates","description":"Manage equipment usage templates","link":"\/equipment-usage-templates\/index"},{"title":"Defects","description":"View all equipment defects","link":"\/EquipmentDefects\/index"},{"title":"Equipment Records","description":"View all equipment records","link":"\/EquipmentLogs\/index"},{"title":"Equipment Types","description":"View all equipment types","link":"\/EquipmentTypes\/index"},{"title":"Add Record","description":"Add a new equipment type","link":"\/EquipmentTypes\/add"},{"title":"Meetings","description":"List Meetings","link":"\/Meetings\/index"},{"title":"Add Meeting","description":"Add Meetings","link":"\/Meetings\/add"},{"title":"Meetings Templates","description":"List Meetings Templates","link":"\/MeetingTemplates\/index"},{"title":"Add Meeting Templates","description":"Add Meeting Templates","link":"\/MeetingTemplates\/add"},{"title":"Meetings Types","description":"List Meetings Types","link":"\/MeetingTypes\/index"},{"title":"Messages","description":"Manage notice board messages and notifications","link":"\/Messages\/index"},{"title":"Alerts","description":"View all alerts","link":"\/Alerts\/index"},{"title":"My Tasks","description":"View My Tasks","link":"\/MyTasks\/index"},{"title":"Resources","description":"List resources","link":"\/Resources\/index"},{"title":"Add Resource","description":null,"link":"\/Resources\/add"},{"title":"Incidents","description":"List incidents","link":"\/Incidents\/index"},{"title":"Incident Templates","description":"Incident Templates","link":"\/IncidentTemplates\/index"},{"title":"Incident Reports","description":"Incident Reports","link":"\/IncidentsReports\/index"},{"title":"Risk Assessments","description":"List risk assessments","link":"\/Tasks\/index"},{"title":"Add Risk Assessments","description":"Add Risk Assessments","link":"\/Tasks\/add"},{"title":"Risk Matrix","description":"Risk Matrix","link":"\/RiskMatrices\/index"},{"title":"Master List","description":"Risk Assessment Master List","link":"\/RiskAssessmentMasters\/index"},{"title":"Risk Classes","description":"Risk Classes","link":"\/RiskClasses\/index"},{"title":"Risk Probabilities","description":"Risk Probabilities","link":"\/RiskProbabilities\/index"},{"title":"Risk Consequences","description":"Risk Consequences","link":"\/RiskSeverities\/index"},{"title":"Certifications","description":"List Certifications","link":"\/Certifications\/index"},{"title":"Add Certification","description":"Add Certification","link":"\/Certifications\/add"},{"title":"Certification Types","description":"List Certifications Types","link":"\/CertificationTypes\/index"},{"title":"Add Certification Type","description":"Add Certification Type","link":"\/CertificationTypes\/add"},{"title":"People Lookup","description":"View training matrix","link":"\/People\/index"},{"title":"Training","description":"Manage inductions and associated data","link":"\/registers\/index"},{"title":"Add Register","description":"Add new register","link":"\/registers\/add"},{"title":"Invite User","description":"Invite a user to complete an induction","link":"\/registers\/invite"},{"title":"Register Templates","description":"Manage register templates","link":"\/register-templates\/index"},{"title":"Form Templates","description":"Manage Form templates","link":"\/form-templates\/index"},{"title":"Backups","description":"Backup and restore the system","link":"\/Backups\/index"},{"title":"Branches","description":"View all branches","link":"\/Branches\/index"},{"title":"Add Branch","description":"Add a new branch","link":"\/Branches\/add"},{"title":"Locations","description":"View all branch locations","link":"\/BranchLocations\/index"},{"title":"Add Location","description":"Add a new branch location","link":"\/BranchLocations\/add"},{"title":"Cron Jobs","description":"Scheduled Tasks","link":"\/Cronjobs\/index"},{"title":"Departments","description":"View all departments","link":"\/Departments\/index"},{"title":"Add Departments","description":"Add a new departments","link":"\/Departments\/add"},{"title":"Menus","description":"Manage menus","link":"\/Menus\/index"},{"title":"Users","description":"List Users","link":"\/Users\/index"},{"title":"Add Users","description":"Add Users","link":"\/Users\/add"},{"title":"Users Types","description":"List Users Types","link":"\/UserTypes\/index"},{"title":"Add Users Type Type","description":"Add Users Type Type","link":"\/UserTypes\/add"}];
+    var selectedIndex = -1;
+
+    document.getElementById('sidebar-search').addEventListener('input', function() {
+        var query = this.value.toLowerCase();
+        if(query.length < 3) {
+            document.getElementById('search-results').innerHTML = '';
+            selectedIndex = -1;
+            return;
+        }
+        var results = menuItems.filter(function(item) {
+            return item.title.toLowerCase().includes(query) || (item.description && item.description.toLowerCase().includes(query));
+        });
+
+        var resultsContainer = document.getElementById('search-results');
+        resultsContainer.innerHTML = '';
+
+        results.forEach(function(item) {
+            var button = document.createElement('button');
+            button.className = 'btn btn-default search-result-button btn-block';
+            button.textContent = item.title;
+            button.title = item.description;
+            button.addEventListener('click', function() {
+                window.location.href = item.link;
+            });
+            resultsContainer.appendChild(button);
+        });
+        selectedIndex = -1;
+    });
+
+    document.getElementById('sidebar-search').addEventListener('keydown', function(event) {
+        var resultsContainer = document.getElementById('search-results');
+        var buttons = resultsContainer.getElementsByClassName('search-result-button');
+        console.log(event.key);
+        if (event.key === 'ArrowDown') {
+            if (selectedIndex < buttons.length - 1) {
+                selectedIndex++;
+                updateSelection(buttons);
+            }
+        } else if (event.key === 'ArrowUp') {
+            if (selectedIndex > 0) {
+                selectedIndex--;
+                updateSelection(buttons);
+            }
+        } else if (event.key === 'Enter' && selectedIndex >= 0 && selectedIndex < buttons.length) {
+            if (selectedIndex >= 0 && selectedIndex < buttons.length) {
+                //prevent form submission
+                event.preventDefault();
+                buttons[selectedIndex].click();
+            }
+        }
+    });
+
+    function updateSelection(buttons) {
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].classList.remove('selected');
+        }
+        if (selectedIndex >= 0 && selectedIndex < buttons.length) {
+            buttons[selectedIndex].classList.add('selected');
+            buttons[selectedIndex].scrollIntoView({ block: 'nearest' });
+        }
+    }
+
+    $(document).ready(function(){
+        
+
+        var baseurl = $(location).attr('pathname');
+        //console.log(baseurl);
+        // if(baseurl[baseurl.length -1] !== "/") {
+        //     baseurl = baseurl+'/';
+        // }
+
+        $("a[href$='"+baseurl+"'].side").addClass('active-item').addClass('menu-open').children('.nav-link').addClass('active-item');
+        $("a[href$='"+baseurl+"'].side").prop("onclick", null).off("click");
+        $("a[href$='"+baseurl+"'].side").parent().parent().parent().addClass('menu-open');
+      
+
+    });
+
+//]]>
+</script><script>
+            // Set the date we're counting down to
+            var countDownDate = 1734399308000;
+
+            // Update the count down every 1 second (30min/3000sec limit)
+            var x = setInterval(function() {
+
+                // Get today's date and time
+                var now = new Date().getTime();
+
+                // Find the distance between now and the count down date
+                var distance = countDownDate - now;
+
+                // Time calculations for days, hours, minutes and seconds
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Display the result in the element with id="demo"
+                var text = '';
+                if(days) text += days + "d ";
+                if(hours) text += hours + "h ";
+                if(minutes) text += minutes + "m ";
+                text += seconds + "s ";
+                document.getElementById("sessionTimer").innerHTML = text;
+
+                // If the count down is finished, write EXPIRED
+                if (distance < 0) {
+                    clearInterval(x);
+                    document.getElementById("sessionTimer").innerHTML = "EXPIRED";
+                }
+            }, 1000);
+            </script><script type="text/javascript">
+    //<![CDTA[
+
+    $(document).ready(function() {
+        var $modalHeight = $(window).height()-($(window).height()/4);
+        $("#previewModel-body").css({"maxHeight":$modalHeight+"px"});
+
+        (function($) {
+        $.fn.hasScrollBar = function() {
+            return this.get(0).scrollHeight > this.height();
+        }
+        })(jQuery);
+
+        $("#bottom-scrolltotop").click(function() {
+        $('#previewModel-body').animate({
+            scrollTop: 0
+        }, 300);
+        });
+
+        $('a.btnPreview').click(previewLink);
+
+        // var action = $(location).attr('href').split('/')[6].split('?')[0];
+        //   if (action == 'calendar') {
+        //     $('.form-button').hide();
+        //   }
+        $("#bottom-submit").click(function() {
+        $(this).closest('#previewModel').find('form').submit();
+        });
+    });
+
+    function previewLink() {
+        var $url = this.href;
+        $('#previewModel-body').html('<img src="/img/ajax_indicator.gif"/>');
+        var $title = $(this).data('title') || 'Preview';
+        if ($(this).attr('title')) {
+        $title = $(this).attr('title');
+        }
+        $('#previewModelLabel').html($title);
+        $('#previewModel').modal();
+        var $isForm = $(this).attr('isForm');
+        if ($isForm) {
+        $("#bottom-close-button").hide();
+        $("#bottom-submit").show();
+        } else {
+        $("#bottom-submit").hide();
+        $("#bottom-close-button").show();
+        }
+        $.ajax({
+        url: $url,
+        type: 'get',
+        success: function(response) {
+            $('#previewModel-body').html(response);
+            if ($isForm) {
+            $("#previewModel-body").find(':submit').hide();
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            window.location = $url;
+        }
+        });
+        return false;
+    }
+
+    //]]>
+</script><script type="text/javascript">
+        //<![CDTA[
+
+
+        // jQuery plugin to prevent double submission of forms
+        jQuery.fn.preventDoubleSubmission = function() {
+            $(this).on('submit', function(e) {
+                var $form = $(this);
+                if ($form.data('submitted') === true) {
+                    // Previously submitted - don't submit again
+                    e.preventDefault();
+                } else {
+                    // Mark it so that the next submit can be ignored
+                    $form.data('submitted', true);
+                }
+            });
+            // Keep chainability
+            return this;
+        };
+
+        $(document).ready(function() {
+
+            if ($('body').width() < 1200) {
+                $('body').addClass('sidebar-collapse');
+            }
+
+            $('table.dbclick2open tbody tr').dblclick(function() {
+                var url = "/incidents/view/" + $(this).attr('data-id');
+                window.location.href = url;
+            });
+
+            $('.index-filter').change(function() {
+                url = "/incidents?go=1/";
+                $('.index-filter').each(function() {
+                    if ($(this).val()) {
+                        $name = $(this).attr('name').replace("][", ".").replace('data[', '').replace(']', '');
+                        url += $name + ":" + $(this).val() + "/";
+                    }
+                });
+                window.location = url;
+            });
+
+            $('.search').change(function() {
+                url = "/incidents/add?filter=1";
+
+                $('.search').each(function() {
+                    var $this_id = "#" + $(this).attr('id');
+
+                    if ($(this).is(':checkbox') && !$(this).is(':checked')) {
+                        $this_id = "#" + $(this).attr('id') + "_";
+                    }
+
+                    if ($($this_id).val()) {
+                        url += "&" + $(this).attr('name') + "=" + $($this_id).val();
+                    }
+                });
+
+                window.location = url;
+
+            }).keypress(function(e) {
+                if ((e.keyCode || e.which) == 13) {
+                    $(this).trigger('change');
+                }
+            });
+
+            $(".datepicker").each(function() {
+                if (/^\d{2}[/]\d{2}[/]\d{4}$/.test($(this).val())) {
+                    $(this).val($(this).val().split('/').reverse().join("-"));
+                } else if (/^\d{1}[/]\d{2}[/]\d{4}$/.test($(this).val())) {
+                    var $date = '0' + $(this).val();
+                    $(this).val($date.split('/').reverse().join("-"));
+                }
+            });
+
+            if (checkInput("date")) {
+                $('.datepicker').attr('type', 'date');
+            } else {
+                $(".datepicker").datepicker({
+                    format: "yyyy-mm-dd"
+                });
+            }
+
+            //Timepicker
+            if (checkInput("time")) {
+                $('.timepicker').attr('type', 'time');
+            } else {
+                // $(".timepicker").timepicker();
+            }
+
+            $('.required > label').append(' <i class="fa fa-asterisk fa-1 text-danger" aria-hidden="true"></i>');
+            $("table.data-table").dataTable();
+            $(".select2").select2();
+            /*
+            $('.timepicker').attr('type', 'time');
+            $(".select2").select2();
+            **/
+            try {
+                $(".editor").summernote({
+                    toolbar: [
+                        // [groupName, [list of button]]
+                        ['style', ['style']],
+                        ['style', ['bold', 'italic', 'underline', 'clear']],
+                        ['fontname', ['fontname']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['table', ['table']],
+                        ['insert', ['link', 'picture', 'video']],
+                        ['view', ['fullscreen', 'codeview']],
+                        ['font', ['strikethrough', 'superscript', 'subscript']],
+                        ['fontsize', ['fontsize']],
+                        ['height', ['height']],
+                        ['view', ['help']]
+                    ]
+                });
+            } catch (error) {
+                console.log(error);
+            }
+            $('form:not(.print-form)').preventDoubleSubmission();
+        });
+
+        function checkInput(type) {
+            var input = document.createElement("input");
+            input.setAttribute("type", type);
+            return input.type == type;
+        }
+
+        //]]>
+    </script>
+
+</body></html>
