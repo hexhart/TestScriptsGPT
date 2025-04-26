@@ -1,3 +1,4 @@
+// Import OpenAI API client and dotenv for environment variable management
 import { OpenAI } from 'openai';
 import dotenv from 'dotenv';
 
@@ -63,3 +64,4 @@ if (import.meta.url === `file://${process.argv[1]}`) {
         process.exit(1);
     }
 }
+
