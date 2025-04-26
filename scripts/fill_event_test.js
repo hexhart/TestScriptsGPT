@@ -1,0 +1,88 @@
+async function fill_event_test(page)    { 
+    // Navigate to the home page
+    await page.goto('https://demo.daktech.au/events/add', { waitUntil: 'networkidle2' });
+
+    // Test data
+    const testData = {
+        department: "3", // Tech Team
+        eventTitle: "Team Meeting",
+        site: "1", // Main
+        address: "123 Test Street",
+        startDate: "01-12-2030",
+        endDate: "01-12-2030",
+        startTime: "10:00AM",
+        endTime: "12:00PM",
+        repeat: false,
+    };
+
+    // Debug each step by verifying if the selector is found and actions are successful
+    try {
+        // Fill the Department dropdown
+        await page.waitForSelector('#department-id', { visible: true });
+        await page.select('#department-id', testData.department);
+        console.log("Department selected successfully.");
+
+        // Fill the Event Title
+        await page.waitForSelector('#name', { visible: true });
+        await page.type('#name', testData.eventTitle);
+        console.log("Event title entered successfully.");
+
+        // Select Site
+        await page.waitForSelector('#branch-location-id', { visible: true });
+        await page.select('#branch-location-id', testData.site);
+        console.log("Site selected successfully.");
+
+        // Fill Address if 'Off Site' is selected
+        if (testData.site === "") {
+            await page.waitForSelector('#address', { visible: true });
+            await page.type('#address', testData.address);
+            console.log("Address entered successfully.");
+        }
+
+        // Fill Start Date
+        await page.waitForSelector('#start-date', { visible: true });
+        await page.type('#start-date', testData.startDate);
+        console.log("Start date entered successfully.");
+
+        // Fill End Date
+        await page.waitForSelector('#end-date', { visible: true });
+        await page.type('#end-date', testData.endDate);
+        console.log("End date entered successfully.");
+
+        // Fill Start Time
+        await page.waitForSelector('#start-time', { visible: true });
+        await page.type('#start-time', testData.startTime);
+        console.log("Start time entered successfully.");
+
+        // Fill End Time
+        await page.waitForSelector('#end-time', { visible: true });
+        await page.type('#end-time', testData.endTime);
+        console.log("End time entered successfully.");
+
+        // Toggle Repeat Event
+        if (testData.repeat) {
+            const repeatSwitch = await page.$('#customSwitch1');
+            if (repeatSwitch) {
+                const isChecked = await page.evaluate((el) => el.checked, repeatSwitch);
+                if (!isChecked) {
+                    await repeatSwitch.click();
+                }
+                console.log("Repeat event toggled successfully.");
+            } else {
+                console.log("Repeat switch not found.");
+            }
+        }
+
+        // Submit the form
+        await Promise.all([
+            page.click('#submit'), // Click the submit button
+            page.waitForNavigation({ waitUntil: 'networkidle2' }), // Wait for the next page to load
+        ]);
+        console.log("Form submitted successfully!");
+
+    } catch (error) {
+        console.error("Error during form interaction:", error.message);
+    }
+}
+
+export default fill_event_test

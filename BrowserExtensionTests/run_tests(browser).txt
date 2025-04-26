@@ -1,0 +1,70 @@
+
+try {
+    // Navigate to the login page
+    await page.goto('https://demo.daktech.au/', { waitUntil: 'networkidle2' });
+        
+    // Wait for the username field to load and input the username
+    await page.waitForSelector('#username', { visible: true });
+    await page.type('#username', 'DakTesting');
+		
+    await page.waitForSelector('button[type="submit"]'); // Adjust selector if necessary
+    await page.click('button[type="submit"]');
+
+    // Wait for the password field to load and input the password
+    await page.waitForSelector('#password', { visible: true });
+    await page.type('#password', 'Test!ng001');
+        
+    // Click the login button
+    await page.waitForSelector('button[type="submit"]'); // Adjust selector if necessary
+    await page.click('button[type="submit"]');
+
+    // Navigate to the login page
+    await page.goto('https://demo.daktech.au/', { waitUntil: 'networkidle2' });
+        
+    console.log('Login successful!');
+		
+	// Save Authentication Cookies
+    const cookies = await page.cookies();
+    const authTokenCookie = cookies.find(cookie => cookie.name === 'authToken'); // Replace with actual cookie name
+    if (authTokenCookie) {
+        console.log('Auth Token:', authTokenCookie.value);
+        fs.writeFileSync('authToken.txt', authTokenCookie.value);
+        console.log('Auth token saved to authToken.txt');
+    } else {
+        console.error('Auth token cookie not found.');
+    }
+} catch (error) {
+    console.error('Error during login:', error);   
+} 
+     
+try {
+    // Wait for the user profile menu icon to appear
+    await page.waitForSelector('.fa-user', { visible: true });
+
+    // Click the profile menu icon to open the dropdown menu
+    await page.click('.fa-user');
+
+    // Wait for the "Sign Out" button to appear (using button text or title)
+    await page.waitForXPath("//a[contains(text(), 'Sign out')]", { visible: true });
+
+    // Click the "Sign Out" button
+    const signOutButton = await page.$x("//a[contains(text(), 'Sign out')]");
+    if (signOutButton.length > 0) {
+        await signOutButton[0].click();
+    } else {
+        throw new Error("Sign Out button not found.");
+    }
+
+    // Wait for navigation to complete after logout
+    await page.waitForNavigation({ waitUntil: 'networkidle2' });
+
+    // Confirm logout by checking the URL or an element on the login page
+    if (page.url().includes('/?redirect=%2Fresources%2Fhome')) {
+        console.log('Logout successful!');
+    } else {
+        console.error('Logout failed or unexpected page after logout.');
+    }
+
+} catch (error) {
+    console.error('Error during logout:', error);
+}

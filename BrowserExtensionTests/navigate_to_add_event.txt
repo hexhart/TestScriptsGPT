@@ -1,0 +1,11 @@
+await page.goto('https://demo.daktech.au/');
+
+// Click on "My Upcoming Events"
+await page.click('a[href="/events/add"]');
+await page.waitForSelector('.card-title'); // Verify that the new section loads
+
+// Verify Navigation to "My Tasks"
+await page.click('a[href="/tasks"]');
+await page.waitForSelector('.card-title', { visible: true });
+
+console.log("Navigation Test Passed!");

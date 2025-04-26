@@ -1,0 +1,36 @@
+
+async function fill_incident_test(page) {
+    // Navigate to the target URL
+    const url = 'https://demo.daktech.au/incidents/add?incident_template_id=1'; 
+    await page.goto(url, { waitUntil: 'networkidle0' });
+
+    // Fill out the form
+    await page.type('#reportdata-field-3', 'John Doe'); // Full Name
+    await page.type('#reportdata-field-4', '0400123456'); // Contact Number
+    await page.type('#reportdata-field-5', '12/12/2023'); // Date of Incident (Australia format)
+    await page.type('#reportdata-field-6', '14:30'); // Time of Incident
+    await page.type('#reportdata-field-7', 'An example incident report.'); // Description of Incident
+
+    // Scroll to the bottom of the page to make the submit button visible
+    await page.evaluate(() => {
+        window.scrollTo(0, document.body.scrollHeight);
+    });
+
+    // Ensure the green submit button is visible
+    const submitButtonSelector = 'button.btn-success'; // Adjust if necessary based on your specific button class
+    await page.waitForSelector(submitButtonSelector, { visible: true });
+
+    // Click the submit button
+    await page.click(submitButtonSelector);
+    console.log('Submit button clicked.');
+
+    // Wait for navigation or confirmation after form submission
+    try {
+        await page.waitForNavigation({ waitUntil: 'networkidle0', timeout: 5000 });
+        console.log('Form submitted successfully.');
+    } catch (error) {
+        console.error('Form submission did not navigate to a new page. Check for errors.');
+    }
+}
+
+export default fill_incident_test
