@@ -6,7 +6,7 @@ The core idea is to speed up and simplify the process of generating, running, an
    - You can copy website HTML source code into ChatGPT (or use our built-in GPT script integration) to quickly generate Puppeteer-based test scripts.
    - The workflow supports both manual and automated approaches: write your own prompts or process a batch of structured questions from a .txt file to automatically generate and save test scripts for your site.
    - All generated test scripts can be run, refined, and organized within the repository.
-   - The project is designed with automation in mind—GitHub Actions monitor file changes, trigger test runs, and send notifications to your team, helping you keep track of updates and maintain high code quality.
+   - The project is designed with automation in mind that includes GitHub Actions to monitor file changes, trigger test runs, and send notifications to your team ensuring to keep track of updates and maintain high code quality.
 ### Key Features:
    -  Automated test generation using GPT-3.5/4.
    -  Easy integration with Puppeteer for browser automation.
@@ -17,7 +17,7 @@ The core idea is to speed up and simplify the process of generating, running, an
 # Initial setup:
 Install and setup Puppeteer OR use Puppeteer IDE browser extension for Chrome browser.
   
-1. Copy the source code of the website page into chatGPT and generate the test scripts - be specific to mention Puppeteer syntax when creating the GPT prompt.
+1. Copy the source code of the website page into chatGPT and generate the test scripts, ensure to be specific to mention Puppeteer syntax when creating the GPT prompt.
 2. Copy the GPT generated tests scripts and paste into Puppeteer,
 3. Run test to ensure the scripts are working,
 4. Once the script is working successfully, save it into the Github tests folder.
