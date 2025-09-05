@@ -207,6 +207,7 @@ In order to activate PuppeteerGPT AI automation integration, we need to run the 
 - README file update as of ~~10.01.2025~~ 27/04/2025 by Hex
 - Project repository does not include node_modules folder to avoid redundancy, 
 - Running on this test script requires NodeJS installation as well.
-
-**You have reached the end of this guide. Thank you.**
+__________________________________________
+<p align="center"><img width="200" height="200" alt="Logo2m" src="https://github.com/user-attachments/assets/147e72b3-d07b-43d9-aa80-f49094e3b592" /></p>
+<h4 align="center">You have reached the end of this README. Thank you.</h4>
 
